@@ -1,3 +1,5 @@
 module.exports = {
-    asyncHandler: require('./asyncHandler')
+    asyncHandler: require('./asyncHandler'),
+    imagePaths: require('./imagePaths'),
+    emailRegex: require('./emailRegex')
 }
