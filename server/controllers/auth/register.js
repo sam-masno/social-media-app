@@ -1,6 +1,7 @@
 const { User } = require('../../db/models');
 const { writeFile, unlink } = require('fs').promises;
 const { v4: uuid } = require('uuid');
+const { signJwt } = require('../../utils');
 
 const { 
     asyncHandler, 
@@ -33,6 +34,10 @@ module.exports = asyncHandler(async (req, res, next) => {
         throw new Error(errors.join(' '))
     }
 
+    const emailInUse = await User.findOne({ email });
+
+    if(emailInUse) throw new Error('Email is already in use.')
+
     // write user image
     const imageUrl = uuid();
 
@@ -40,10 +45,14 @@ module.exports = asyncHandler(async (req, res, next) => {
 
     // create user, cleanup image if failed
     try {
-        await User.create({ name, email, password, imageUrl })
+        const user = await User.create({ name, email, password, imageUrl })
+        const token = signJwt(user._id)
+        user.password = undefined;
+        return res.json({ jwt: token, user });
+        
     } catch (error) {
         await unlink(`${userImage}/${imageUrl}`);
+        throw error;
     }   
 
-    res.json(userImage);
 });
