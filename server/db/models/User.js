@@ -16,7 +16,6 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: false,
         minlength: 6
     },
     imageUrl: {
@@ -34,11 +33,7 @@ UserSchema.pre('save', async function(next) {
 });
 
 UserSchema.methods.compare = async function(challengePassword) {
-    return bcrypt.compare(challengPassword, this.password);
+    return bcrypt.compare(challengePassword, this.password);
 }
-
-// UserSchema.methods.genToken = function() {
-
-// }
 
 module.exports = mongoose.model('User', UserSchema);
