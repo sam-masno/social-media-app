@@ -40,9 +40,9 @@ module.exports = asyncHandler(async (req, res, next) => {
 
     // write user image
     const imageName = uuid();
-    const imageUrl = '/images/users/' + imageName;
+    const imageUrl = '/images/users/' + imageName + '.jpg';
 
-    await writeFile(`${userImage}/${imageUrl}`, req.files[0].buffer);
+    await writeFile(`${userImage}/${imageName}.jpg`, req.files[0].buffer);
 
     // create user, cleanup image if failed
     try {
