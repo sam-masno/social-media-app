@@ -8,7 +8,7 @@ module.exports = asyncHandler(async (req, res, next) => {
 
     if(!post) throw new Error('Post does not exist');
 
-    if(!post.author.toString() === req.user._id.toString()) {
+    if(post.author.toString() !== req.user._id.toString()) {
         throw new Error('Only the author of this post can perform this action');
     }
 
