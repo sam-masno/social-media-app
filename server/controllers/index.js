@@ -4,5 +4,6 @@ module.exports = {
    createPost: require('./posts/createPost'),
    getPost: require('./posts/getPost'),
    getAllPosts: require('./posts/getAllPosts'),
-   updatePost: require('./posts/updatePost')
+   updatePost: require('./posts/updatePost'),
+   deletePost: require('./posts/deletePost')
 }
