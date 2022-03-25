@@ -3,10 +3,11 @@ require('./db/connectDB');
 
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const upload = require('multer')();
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(upload.any());
+app.use(bodyParser.json());
 
 app.use('/api', require('./routes'));
 app.use(require('./controllers/errors/basicErrorHandler'));
