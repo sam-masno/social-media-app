@@ -23,8 +23,8 @@ module.exports = asyncHandler(async (req, res, next) => {
     const { buffer } = req.files[0];
 
     const uploadName = uuid();
-    const uploadPath = `${uploads}/${uploadName}`
-    const imageUrl = '/images/uploads/' + uploadName;
+    const uploadPath = `${uploads}/${uploadName}.jpg`;
+    const imageUrl = '/images/uploads/' + uploadName + '.jpg';
 
     await writeFile(uploadPath, buffer);
 
