@@ -1,5 +1,12 @@
 const router = require('express').Router();
-const { createPost, getPost, getAllPosts, updatePost, deletePost } = require('../controllers');
+const { 
+    createPost, 
+    getPost, 
+    getAllPosts, 
+    updatePost, 
+    deletePost 
+} = require('../controllers');
+
 const { protected, isPostOwner } = require('../middleware');
 
 router.use(protected);
