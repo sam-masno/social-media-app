@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema({
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     title: {
         type: String,
         maxlength: 50,
@@ -8,7 +12,7 @@ const PostSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    discription: {
+    description: {
         type: String,
         maxlength: 500,
         minlength: 5,
