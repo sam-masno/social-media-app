@@ -1,9 +1,12 @@
 const router = require('express').Router();
-const { createPost, getPost } = require('../controllers');
-const { handleJwt, protected } = require('../middleware');
+const { createPost, getPost, getAllPosts } = require('../controllers');
+const { protected } = require('../middleware');
+
+router.use(protected);
 
 router.route('/')
-    .post(handleJwt, protected, createPost);
+    .post(createPost)
+    .get(getAllPosts);
 
 router.route('/:postId')
     .get(getPost);
