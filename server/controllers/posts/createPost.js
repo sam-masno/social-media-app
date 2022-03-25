@@ -29,7 +29,7 @@ module.exports = asyncHandler(async (req, res, next) => {
     await writeFile(uploadPath, buffer);
 
     try {
-        const post = await Post.create({ author: req.user, title, description, imageUrl });
+        const post = await Post.create({ author: req.user, title, description, imageUrl, imageName: uploadName });
         res.json({ success: true, post });    
     } catch (error) {
         await unlink(uploadPath);
