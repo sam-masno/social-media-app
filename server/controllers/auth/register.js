@@ -39,16 +39,17 @@ module.exports = asyncHandler(async (req, res, next) => {
     if(emailInUse) throw new Error('Email is already in use.')
 
     // write user image
-    const imageUrl = uuid();
+    const imageName = uuid();
+    const imageUrl = '/images/users/' + imageName;
 
     await writeFile(`${userImage}/${imageUrl}`, req.files[0].buffer);
 
     // create user, cleanup image if failed
     try {
-        const user = await User.create({ name, email, password, imageUrl })
+        const user = await User.create({ name, email, password, imageUrl });
         const token = signJwt(user._id)
         user.password = undefined;
-        return res.json({ jwt: token, user });
+        return res.json({ success: true, jwt: token, user });
         
     } catch (error) {
         await unlink(`${userImage}/${imageUrl}`);
