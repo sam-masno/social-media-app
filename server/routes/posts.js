@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { createPost, getPost, getAllPosts } = require('../controllers');
-const { protected } = require('../middleware');
+const { createPost, getPost, getAllPosts, updatePost } = require('../controllers');
+const { protected, isPostOwner } = require('../middleware');
 
 router.use(protected);
 
@@ -9,6 +9,7 @@ router.route('/')
     .get(getAllPosts);
 
 router.route('/:postId')
-    .get(getPost);
+    .get(getPost)
+    .put(isPostOwner, updatePost);
 
 module.exports = router;
