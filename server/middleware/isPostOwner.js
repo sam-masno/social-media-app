@@ -4,6 +4,7 @@ const { asyncHandler } = require('../utils');
 module.exports = asyncHandler(async (req, res, next) => {
     const { postId } = req.params;
 
+    // verify jwt sender owns post
     const post = await Post.findById(postId);
 
     if(!post) throw new Error('Post does not exist');

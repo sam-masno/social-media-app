@@ -12,6 +12,7 @@ module.exports = asyncHandler( async (req, res, next) => {
 
     const errors = [];
 
+    // validate update if property is in request
     if(title) {
         if (title.length < 2 || title.length > 50) {
             errors.push('Title must be between 2 and 50 characters.');
@@ -42,6 +43,7 @@ module.exports = asyncHandler( async (req, res, next) => {
     let newPost;
 
     try {
+        // handle image if file present, update tags. cleanup if save fails
         if(image) {
             const { tags, regions } = await getImageTags(image.buffer);
             await writeFile(uploadPath, image.buffer);
@@ -56,6 +58,7 @@ module.exports = asyncHandler( async (req, res, next) => {
         throw error;
     }
 
+    // cleanup old image
     await unlink(previousImage);
 
     res.json({ success: true, post: newPost });

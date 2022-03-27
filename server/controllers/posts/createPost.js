@@ -10,6 +10,7 @@ module.exports = asyncHandler(async (req, res, next) => {
 
     const errors = [];
 
+    // validate request
     if(!title || title.length < 2 || title.length > 50) errors.push('Title must be between 2 and 50 characters.');
 
     if(!description || description.length < 5 || description.length > 500) errors.push('Description must be between 5 and 500 characters.')
@@ -22,6 +23,7 @@ module.exports = asyncHandler(async (req, res, next) => {
         throw new Error(errors.join(' '))
     }
 
+    // handle file and image tags, cleanup file if post creation fails
     const { buffer } = req.files[0];
 
     const { tags, regions } = await getImageTags(buffer);
