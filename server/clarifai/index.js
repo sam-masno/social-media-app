@@ -23,7 +23,7 @@ module.exports = async (imgBuffer) => {
             }  
             const { regions } = response.outputs[0].data;
             // const concepts = data.concepts.map(concept => concept.name);
-            const allTagNames = regions.map(region => region.data.concepts[0].name)
+            const allTagNames = regions.map(region => region.data.concepts[0].name.toLowerCase())
             
             const trackNames = {};
 
