@@ -2,6 +2,7 @@ const { asyncHandler } = require('../../utils');
 const { writeFile, unlink } = require('fs').promises;
 const { v4: uuid } = require('uuid');
 const { imagePaths: { uploads } } = require('../../utils');
+const getImageTags = require('../../clarifai');
 
 module.exports = asyncHandler( async (req, res, next) => {
     const { post } = req;
@@ -33,6 +34,7 @@ module.exports = asyncHandler( async (req, res, next) => {
         throw new Error(errors.join(' '));
     }
 
+
     const uploadName = uuid();
     const uploadPath = `${uploads}/${uploadName}.jpg`;
     const imageUrl = '/images/uploads/' + uploadName + '.jpg';
@@ -41,7 +43,10 @@ module.exports = asyncHandler( async (req, res, next) => {
 
     try {
         if(image) {
+            const { tags, regions } = await getImageTags(image.buffer);
             await writeFile(uploadPath, image.buffer);
+            post.tags = tags;
+            post.regions = regions;
             post.imageName = uploadName;
             post.imageUrl = imageUrl;
         }

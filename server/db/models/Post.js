@@ -25,6 +25,16 @@ const PostSchema = new mongoose.Schema({
     imageName: {
         type: String,
         required: true
+    },
+    tags : {
+        type: [String],
+        default: [],
+        required: true
+    },
+    regions : {
+        type: Array,
+        default: [],
+        required: true
     }
 }, {
     timestamps: true

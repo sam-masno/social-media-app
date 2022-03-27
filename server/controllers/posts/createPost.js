@@ -2,6 +2,8 @@ const { asyncHandler, imagePaths: {uploads} } = require('../../utils');
 const { Post } = require('../../db/models');
 const { writeFile, unlink } = require('fs').promises;
 const { v4: uuid } = require('uuid');
+const getImageTags = require('../../clarifai');
+
 
 module.exports = asyncHandler(async (req, res, next) => {
     const { title, description } = req.body;
@@ -22,6 +24,8 @@ module.exports = asyncHandler(async (req, res, next) => {
 
     const { buffer } = req.files[0];
 
+    const { tags, regions } = await getImageTags(buffer);
+
     const uploadName = uuid();
     const uploadPath = `${uploads}/${uploadName}.jpg`;
     const imageUrl = '/images/uploads/' + uploadName + '.jpg';
@@ -29,7 +33,7 @@ module.exports = asyncHandler(async (req, res, next) => {
     await writeFile(uploadPath, buffer);
 
     try {
-        const post = await Post.create({ author: req.user, title, description, imageUrl, imageName: uploadName });
+        const post = await Post.create({ author: req.user, title, description, imageUrl, imageName: uploadName, tags, regions });
         res.json({ success: true, post });    
     } catch (error) {
         await unlink(uploadPath);
