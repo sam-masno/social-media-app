@@ -3,13 +3,14 @@ const { asyncHandler, signJwt } = require('../../utils');
 
 module.exports = asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
-
+    
     // validate login and return jwt
     const user = await User.findOne({ email });
     
     if(!user) throw new Error('User does not exist');
 
-    if(!user.compare(password)) throw new Error('Incorrect password');
+    const validPassword = await user.compare(password);
+    if(!validPassword) throw new Error('Incorrect password');
 
     const token = signJwt(user._id);
 

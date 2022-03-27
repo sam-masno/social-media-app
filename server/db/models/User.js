@@ -32,7 +32,7 @@ UserSchema.pre('save', async function(next) {
     next();
 });
 
-UserSchema.methods.compare = async function(challengePassword) {
+UserSchema.methods.compare = function(challengePassword) {
     return bcrypt.compare(challengePassword, this.password);
 }
 
