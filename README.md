@@ -27,39 +27,39 @@ Required arguments:
     - email: string
     - password: string
     - image: image file
-    
+
 2. `/api/auth/login` - verifies email password combination and returns JWT and user object
--Post
-Accepts: form-data or JSON
-Required arguments:
-    -email: string
-    -password: string
-3. `/api/auth/me` - returns user object if user has logged in
--Get
+-Post  
+Accepts: `form-data` or `JSON`  
+Required arguments:  
+    - email: string  
+    - password: string  
+3. `/api/auth/me` - returns user object if user has logged in  
+-Get  
+  
+For protected resources, request must have the header `Authorization: Bearer ` + JWT set.  
 
-For protected resources, request must have the header `Authorization: Bearer ` + JWT set.
+4. `/api/posts` - handles creation of new post and feching of all posts  
+-Post   
+Accepts: `form-data`  
+Required arguments:  
+    - description: string  
+    - title: string  
+    - image: image file  
+-Get   
+Optional query params: `tag`  
 
-4. `/api/posts` - handles creation of new post and feching of all posts
--Post 
-Accepts: `form-data`
-Required arguments:
-    -description: string
-    -title: string
-    -image: image file
--Get 
-Optional query params: `tag`
-
-5. `/api/posts/:postId` - fetch, update, or delete a certain post
--Get
-None
--Put
-Accepts: `form-data`
-May only be performed by author of post
-Optional Arguments:
-    -description: string
-    -title: string
-    -image: image file
--Delete
-May only be performed by author of post
+5. `/api/posts/:postId` - fetch, update, or delete a certain post  
+-Get  
+None  
+-Put  
+Accepts: `form-data`  
+May only be performed by author of post  
+Optional Arguments:  
+    - description: string  
+    - title: string  
+    - image: image file  
+-Delete  
+May only be performed by author of post  
 
 
