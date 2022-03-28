@@ -7,5 +7,7 @@ module.exports = asyncHandler( async(req, res, next) => {
         throw new Error('No user logged in');
     }
 
+    //return details of logged in user
+
     res.json({ success: true, user });
 })
